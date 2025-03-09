@@ -1,0 +1,12 @@
+source:
+  type: "mysql"
+  config:
+    host_port: "localhost:3377"
+    username: "root"
+    password: "root"
+    database: "inventory"
+    
+sink:
+  type: "datahub-rest"
+  config:
+    server: "http://localhost:8080"
