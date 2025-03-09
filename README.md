@@ -161,6 +161,9 @@ Once `setup.sh` finishes execution, a data quality report for the products table
 
 Once the application has finished running, the table quality report will be ready. It can be observed through the following screenshots:
 
-<p align="center"><img src="docs/custom_assertions.png" alt="workflow" width="600"/><em>Custom assertions in the Quality section of the target table</em></p>
+![Custom assertions in the Quality section](docs/custom_assertions.png)
+*Custom assertions within the Quality section of the target table for enhanced data validation.*
 
-<p align="center"><img src="docs/assertion_details.png" alt="workflow" width="600"/><em>The application also supports validation results in the details of Assertion results</em></p>
+![Validation results in assertion details](docs/assertion_details.png)
+*The application displays detailed validation results for assertions to improve test result clarity.*
+
