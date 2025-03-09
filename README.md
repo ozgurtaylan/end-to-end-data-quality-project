@@ -167,3 +167,18 @@ Once the application has finished running, the table quality report will be read
 ![Validation results in assertion details](docs/assertion_details.png)
 *The application displays validation results(count) for custom assertions.*
 
+# **Evicting the Resources** 
+## Running `nuke.sh`
+
+The `nuke.sh` script is designed for evicting the resources and tearing down the project environment. It performs the following steps:
+
+1. Stops and removes Docker containers, volumes, and orphaned containers.
+2. Deletes the virtual environment.
+
+#### Notes
+
+- To run the `nuke.sh` script, use the following command:
+  ```bash
+  chmod +x nuke.sh
+- You can monitor the process through the shell logs.
+Once nuke.sh finishes execution, the environment and all associated resources will be removed!
