@@ -42,6 +42,7 @@ class ProductController(BaseController):
     # Product Price Validations
     # Open to improvements...
     def count_null_prices(self, df: pd.DataFrame, column: str) -> tuple:
+        self._validate_columns(df, [column])
         result = self._count_null(df, column)
         status = "SUCCESS" if result == 0 else "FAILURE"
         return result, status
@@ -54,27 +55,32 @@ class ProductController(BaseController):
 
     # Product Stock Validations
     def count_null_stocks(self, df: pd.DataFrame, column: str) -> tuple:
+        self._validate_columns(df, [column])
         result = self._count_null(df, column)
         status = "SUCCESS" if result == 0 else "FAILURE"
         return result, status
 
     def count_negative_stocks(self, df: pd.DataFrame, column: str) -> tuple:
+        self._validate_columns(df, [column])
         result = self._count_negative(df, column)
         status = "SUCCESS" if result == 0 else "FAILURE"
         return result, status
 
     def count_overvalued_stocks(self, df: pd.DataFrame, column: str) -> tuple:
+        self._validate_columns(df, [column])
         result = self._count_overvalued(df, column, self.STOCK_THRESHOLD)
         status = "SUCCESS" if result == 0 else "FAILURE"
         return result, status
 
     # Product Category Validations
     def count_null_categories(self, df: pd.DataFrame, column: str) -> tuple:
+        self._validate_columns(df, [column])
         result = self._count_null(df, column)
         status = "SUCCESS" if result == 0 else "FAILURE"
         return result, status
 
     def count_uncategorized_categories(self, df: pd.DataFrame, column: str) -> tuple:
+        self._validate_columns(df, [column])
         result = self._count_off_list(df, column, self.VALID_CATEGORIES)
         status = "SUCCESS" if result == 0 else "FAILURE"
         return result, status
