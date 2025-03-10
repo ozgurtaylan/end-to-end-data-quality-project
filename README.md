@@ -67,6 +67,7 @@ Configuration for metadata ingestion into DataHub. It specifies the MySQL source
 
 #### app/controllers/*.py
 - Reponsible for handling data quality controls.
+
 Base Controller:
 - Provides common tools for data validation like checking for missing or negative values.
 - Implements helper methods used by all other controllers.
