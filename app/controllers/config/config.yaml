@@ -1,0 +1,37 @@
+controllers:
+  - class_name: "ProductController"
+    db_type: "mysql"
+    db_user: "root"
+    db_password: "root"  
+    db_host: "localhost"
+    db_port: 3377
+    db_name: "inventory"
+    conn_idle_timeout: 3600
+    table_name: "products"
+    chunk_size: 20000
+    datahub_server_url: "http://localhost:8080"
+    datahub_platform_urn: "urn:li:dataPlatform:mysql"
+    datahub_entity_urn: "urn:li:dataset:(urn:li:dataPlatform:mysql,inventory.products,PROD)"
+    column_operations:
+      - name: "id"
+      - name: "name"
+      - name: "price"
+        controls:
+          - name: "missing_price_count"
+            responsible_method: "count_null_prices"
+          - name: "non_positive_price_count"
+            responsible_method: "count_invalid_prices"
+      - name: "stock"
+        controls:
+          - name: "missing_stock_count"
+            responsible_method: "count_null_stocks"
+          - name: "negative_stock_count"
+            responsible_method: "count_negative_stocks"
+          - name: "overvalued_stock_count"
+            responsible_method: "count_overvalued_stocks"
+      - name: "category"
+        controls:
+          - name: "missing_category_count"
+            responsible_method: "count_null_categories"
+          - name: "uncategorized_category_count"
+            responsible_method: "count_uncategorized_categories"

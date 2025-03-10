@@ -3,48 +3,78 @@ from .base_controller import BaseController
 
 class ProductController(BaseController):
 
-    def __init__(self,db_name,table_name,columns,valid_categories, stock_threshold):
-        super().__init__(db_name,table_name,columns)
-        self._valid_categories = valid_categories
-        self._stock_threshold = stock_threshold
+    # Open to improvements...
+    STOCK_THRESHOLD: int = 4000
+    VALID_CATEGORIES: list = ["Elektronik", "Moda", "Ev & Yaşam", "Spor", "Otomotiv"]
 
-    def _initialize_controls(self):
-        controls = [
-                {"column_name": "price", "control_name": "missing_price_count", "method": self._count_null_prices},
-                {"column_name": "price", "control_name": "non_positive_price_count", "method": self._count_invalid_prices},
-                {"column_name": "stock", "control_name": "missing_stock_count", "method": self._count_null_stocks},
-                {"column_name": "stock", "control_name": "negative_stock_count", "method": self._count_negative_stocks},
-                {"column_name": "stock", "control_name": "overvalued_stock_count", "method": self._count_overvalued_stocks},
-                {"column_name": "category", "control_name": "missing_category_count", "method": self._count_null_categories},
-                {"column_name": "category", "control_name": "uncategorized_category_count", "method": self._count_uncategorized_categories,},
-            ]
-        
-        for control in controls:
-            control["result"] = 0
-            control["status"] = "Not Run"
-        return controls
-    
+    def __init__(
+        self,
+        db_type: str,
+        db_user: str,
+        db_password: str,
+        db_host: str,
+        db_port: int,
+        db_name: str,
+        table_name: str,
+        conn_idle_timeout: int,
+        chunk_size: int,
+        datahub_server_url: str,
+        datahub_platform_urn: str,
+        datahub_entity_urn: str,
+        column_operations: list,
+    ):
+        super().__init__(
+            db_type,
+            db_user,
+            db_password,
+            db_host,
+            db_port,
+            db_name,
+            table_name,
+            conn_idle_timeout,
+            chunk_size,
+            datahub_server_url,
+            datahub_platform_urn,
+            datahub_entity_urn,
+            column_operations,
+        )
+
     # Product Price Validations
-    def _count_null_prices(self, df: pd.DataFrame, column):
-        return self._count_null(df, column)
+    # Open to improvements...
+    def count_null_prices(self, df: pd.DataFrame, column: str) -> tuple:
+        result = self._count_null(df, column)
+        status = "SUCCESS" if result == 0 else "FAILURE"
+        return result, status
 
-    def _count_invalid_prices(self, df: pd.DataFrame, column):
+    def count_invalid_prices(self, df: pd.DataFrame, column: str) -> tuple:
         self._validate_columns(df, [column])
-        return int((df[column] <= 0).sum())
+        result = int((df[column] <= 0).sum())
+        status = "SUCCESS" if result == 0 else "FAILURE"
+        return result, status
 
     # Product Stock Validations
-    def _count_null_stocks(self, df: pd.DataFrame, column):
-        return self._count_null(df, column)
+    def count_null_stocks(self, df: pd.DataFrame, column: str) -> tuple:
+        result = self._count_null(df, column)
+        status = "SUCCESS" if result == 0 else "FAILURE"
+        return result, status
 
-    def _count_negative_stocks(self, df: pd.DataFrame, column):
-        return self._count_negative(df, column)
+    def count_negative_stocks(self, df: pd.DataFrame, column: str) -> tuple:
+        result = self._count_negative(df, column)
+        status = "SUCCESS" if result == 0 else "FAILURE"
+        return result, status
 
-    def _count_overvalued_stocks(self, df: pd.DataFrame, column):
-        return self._count_overvalued(df, column, self._stock_threshold)
+    def count_overvalued_stocks(self, df: pd.DataFrame, column: str) -> tuple:
+        result = self._count_overvalued(df, column, self.STOCK_THRESHOLD)
+        status = "SUCCESS" if result == 0 else "FAILURE"
+        return result, status
 
     # Product Category Validations
-    def _count_null_categories(self, df: pd.DataFrame, column):
-        return self._count_null(df, column)
+    def count_null_categories(self, df: pd.DataFrame, column: str) -> tuple:
+        result = self._count_null(df, column)
+        status = "SUCCESS" if result == 0 else "FAILURE"
+        return result, status
 
-    def _count_uncategorized_categories(self, df: pd.DataFrame, column):
-        return self._count_off_list(df, column, self._valid_categories)
+    def count_uncategorized_categories(self, df: pd.DataFrame, column: str) -> tuple:
+        result = self._count_off_list(df, column, self.VALID_CATEGORIES)
+        status = "SUCCESS" if result == 0 else "FAILURE"
+        return result, status

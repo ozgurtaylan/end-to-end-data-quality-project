@@ -2,10 +2,11 @@ import time
 import logging
 from typing import Dict, Literal
 from datahub.ingestion.graph.client import DatahubClientConfig, DataHubGraph
-import config
+
+logger = logging.getLogger("QUALITY_CHEKS")
 
 class AssertionHandler:
-    def __init__(self, server_url=config.DATAHUB_SERVER_URL, platform_urn=config.DATAHUB_PLATFORM_URN):
+    def __init__(self, server_url, platform_urn):
         self._server_url = server_url
         self._platform_urn = platform_urn
         self._graph = self._initialize_datahub_client()

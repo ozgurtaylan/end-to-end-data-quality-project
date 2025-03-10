@@ -2,6 +2,5 @@ venv
 test.ipynb
 test.py
 test.txt
-data.csv
-data.json
+test.yaml
 .DS_Store
