@@ -78,7 +78,7 @@ Product Controller:
 
 Controller Factory:
 - Dynamically creates controller instances based on a configuration.
-- Uses a simple mapping between names and classes along with external YAML files (like product.yaml) to set parameters, making the system easy to extend or modify.
+- Uses a simple mapping between names and classes along with external YAML file to set parameters, making the system easy to extend or modify.
 
 ---
 
